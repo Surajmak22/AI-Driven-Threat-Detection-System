@@ -32,11 +32,15 @@ def main():
     # Launch the dashboard
     print("Starting SmartGuard AI Dashboard...")
     print("Press Ctrl+C to stop the dashboard")
-    print("Open http://localhost:8501 in your web browser")
+    print("Open http://localhost:8502 in your web browser")
     
     dashboard_path = str(Path(__file__).parent / "src" / "dashboard" / "dashboard.py")
     os.environ["STREAMLIT_SERVER_HEADLESS"] = "true"
-    subprocess.call(["streamlit", "run", dashboard_path, "--server.port=8501", "--server.headless=true"])
+    try:
+        subprocess.call(["streamlit", "run", dashboard_path, "--server.port=8502", "--server.headless=true"])
+    except Exception as e:
+        print(f"Error launching dashboard: {e}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     try:
