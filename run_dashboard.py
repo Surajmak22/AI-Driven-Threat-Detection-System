@@ -29,17 +29,20 @@ def main():
         print("Required packages not found. Installing...")
         install_requirements()
     
-    # Launch the dashboard
+    # Set environment variables for Streamlit
+    os.environ["STREAMLIT_SERVER_PORT"] = "8502"
+    os.environ["STREAMLIT_SERVER_HEADLESS"] = "true"
+    
     print("Starting SmartGuard AI Dashboard...")
     print("Press Ctrl+C to stop the dashboard")
     print("Open http://localhost:8502 in your web browser")
     
-    dashboard_path = str(Path(__file__).parent / "src" / "dashboard" / "dashboard.py")
-    os.environ["STREAMLIT_SERVER_HEADLESS"] = "true"
     try:
-        subprocess.call(["streamlit", "run", dashboard_path, "--server.port=8502", "--server.headless=true"])
+        # Initialize and run the dashboard directly
+        dashboard = SmartGuardDashboard()
+        dashboard.run()
     except Exception as e:
-        print(f"Error launching dashboard: {e}")
+        print(f"Error running dashboard: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
