@@ -28,7 +28,8 @@ st.markdown("""
 
 class SmartGuardDashboard:
     def __init__(self):
-        self.data_dir = Path(os.path.expanduser("~")).joinpath("SmartGuardAI", "data")
+                # Use a relative path for data directories for cloud compatibility
+        self.data_dir = Path(".").joinpath("smartguard_data")
         self.raw_data_dir = self.data_dir / "raw"
         self.processed_data_dir = self.data_dir / "processed"
         self.models_dir = self.data_dir / "models"
