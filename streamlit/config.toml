@@ -1,0 +1,13 @@
+[server]
+port = 8502
+enableCORS = false
+enableXsrfProtection = false
+
+[browser]
+serverAddress = ""
+
+[runner]
+fastRerun = true
+
+[theme]
+base = "light"
