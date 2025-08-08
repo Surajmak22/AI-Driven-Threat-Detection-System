@@ -14,13 +14,7 @@ import os
 import time
 from pathlib import Path
 
-# Set page config
-st.set_page_config(
-    page_title="SmartGuard AI",
-    page_icon="🛡️",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+# Page config is set in app.py. Avoid calling st.set_page_config here to prevent duplicates.
 
 # Custom CSS for better styling
 st.markdown("""
