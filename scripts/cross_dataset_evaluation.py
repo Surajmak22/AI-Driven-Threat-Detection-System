@@ -23,7 +23,13 @@ def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Cross-dataset evaluation (train on UNSW-NB15, test on CICIDS2017)")
     p.add_argument("--unsw", required=True, help="Path to UNSW-NB15 CSV")
     p.add_argument("--cicids", required=True, help="Path to CICIDS2017 CSV")
-    p.add_argument("--label-col", default="label", help="Label column name (default: label)")
+    p.add_argument(
+        "--label-col",
+        default=None,
+        help="Legacy: label column name used for BOTH datasets. Prefer --unsw-label-col and --cicids-label-col.",
+    )
+    p.add_argument("--unsw-label-col", default="label", help="UNSW-NB15 label column (default: label)")
+    p.add_argument("--cicids-label-col", default="Label", help="CICIDS2017 label column (default: Label)")
     p.add_argument("--binary", action="store_true", default=True, help="Use binary labels BENIGN vs ATTACK")
     p.add_argument("--no-binary", dest="binary", action="store_false", help="Use multiclass labels")
     p.add_argument("--models", default="random_forest,svm", help="Comma-separated model names")
@@ -34,11 +40,16 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
 
+    # Backward compatibility: if user provides --label-col, apply it to both datasets.
+    if args.label_col:
+        args.unsw_label_col = args.label_col
+        args.cicids_label_col = args.label_col
+
     unsw_df = pd.read_csv(args.unsw)
     cicids_df = pd.read_csv(args.cicids)
 
-    unsw = prepare_xy(unsw_df, label_col=args.label_col, binary=args.binary)
-    cicids = prepare_xy(cicids_df, label_col=args.label_col, binary=args.binary)
+    unsw = prepare_xy(unsw_df, label_col=args.unsw_label_col, binary=args.binary)
+    cicids = prepare_xy(cicids_df, label_col=args.cicids_label_col, binary=args.binary)
 
     # Use intersection of columns for compatibility
     common_cols = sorted(set(unsw.feature_columns).intersection(set(cicids.feature_columns)))
