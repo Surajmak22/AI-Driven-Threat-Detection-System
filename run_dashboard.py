@@ -36,7 +36,7 @@ def main():
     
     dashboard_path = str(Path(__file__).parent / "src" / "dashboard" / "dashboard.py")
     os.environ["STREAMLIT_SERVER_HEADLESS"] = "true"
-    subprocess.call(["streamlit", "run", dashboard_path, "--server.port=8501", "--server.headless=true"])
+    subprocess.call([sys.executable, "-m", "streamlit", "run", dashboard_path, "--server.port=8501", "--server.headless=true"])
 
 if __name__ == "__main__":
     try:
