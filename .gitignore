@@ -10,3 +10,14 @@ __pycache__/
 results/
 .streamlit/
 .ipynb_checkpoints/
+
+.env
+*.env
+
+datasets/
+data/
+*.pcap
+*.pcapng
+
+.vscode/
+.idea/
